@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+trap 'echo -e "\n\n[!] Received Ctrl + C, exiting."; umount -R /mnt 2>/dev/null; exit 1' INT
 
 ## set this stuff for later use
 bold() { echo -e "\033[1m$1\033[0m"; }
