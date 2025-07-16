@@ -24,7 +24,7 @@ ping -q -c 1 archlinux.org >/dev/null 2>&1 || {
     exit 1
 }
 echo "Internet is active."
-sleep 1
+sleep 1.5
 clear
 
 ## get config
@@ -51,7 +51,7 @@ safe_read "Extra packages to install (space-separated, or leave blank):" extra_p
 bold "Wiping $DRIVE in 5 seconds! You have been warned."
 sleep 5
 echo "Grace period over."
-sleep 0.5
+sleep 1
 echo "Partitioning and wiping $DRIVE..."
 
 wipefs -af "$DRIVE"
