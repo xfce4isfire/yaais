@@ -30,6 +30,7 @@ clear
 
 ## get config
 bold "Config setup"
+sleep 1.5
 
 # list block devices
 bold "Available disks:"
@@ -49,11 +50,14 @@ safe_read "Desktop Environment (gnome, plasma, xfce, none):" desktop_env
 safe_read "Extra packages to install (space-separated, or leave blank):" extra_pkgs
 read -rp "Type 'YES' to continue: " final_confirm
 [[ "$final_confirm" != "YES" ]] && echo "Aborting." && exit 1
+sleep 1
 
 ## partitioning
 bold "Wiping $DRIVE in 5 seconds! You have been warned."
 sleep 5
 echo "Grace period over."
+sleep 1
+echo "Beginning partitioning"
 sleep 1
 echo "Partitioning and wiping $DRIVE..."
 
@@ -76,7 +80,8 @@ pacstrap -K /mnt base linux linux-firmware sudo vim
 genfstab -U /mnt >> /mnt/etc/fstab
 
 ## chroot part
-
+bold "Entering chroot environment"
+sleep 1.5
 arch-chroot /mnt /bin/bash <<EOF
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 hwclock --systohc
@@ -99,41 +104,56 @@ echo -e "$newuser:$userpass" | chpasswd
 
 echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
 
+echo "Installing other neccesary packages"
+sleep 1.5
 pacman -Sy --noconfirm grub efibootmgr networkmanager
 
 # install chosen DE
 case "$desktop_env" in
     gnome)
+        bold "Installing $desktop_env"
+        sleep 2
         pacman -Sy --noconfirm gnome gdm
         systemctl enable gdm
         ;;
     plasma)
+        bold "Installing $desktop_env"
+        sleep 2
         pacman -Sy --noconfirm plasma sddm
         systemctl enable sddm
         ;;
     xfce)
+        bold "Installing $desktop_env"
+        sleep 2
         pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
         systemctl enable lightdm
         ;;
     none|"")
-        echo "Skipping DE installation."
+        bold "Skipping DE installation."
+        sleep 2
         ;;
     *)
-        echo "Invalid DE selection. Skipping..."
+        bold "Invalid DE selection. Skipping..."
+        sleep 2
         ;;
 esac
 
 # optional packages
+bold "Installing optional packages"
 if [[ -n "$extra_pkgs" ]]; then
     pacman -Sy --noconfirm $extra_pkgs || echo "Some packages may have failed to install."
 fi
 
 # install grub
+bold "Installing bootloader"
+sleep 0.5
 grub-install --target=i386-pc "$DRIVE"
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable NetworkManager
 
 echo "Chroot setup complete."
+sleep 1
 EOF
-
-echo "You may now reboot into your new system."
+bold "Installation complete. Rebooting automatically in 5 seconds."
+sleep 5
+reboot
