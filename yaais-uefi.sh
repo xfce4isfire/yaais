@@ -63,8 +63,13 @@ sgdisk -Z "$DRIVE"
 sgdisk -n 1:0:+512M -t 1:ef00 -c 1:"EFI" "$DRIVE"
 sgdisk -n 2:0:0     -t 2:8300 -c 2:"ROOT" "$DRIVE"
 
-PART_EFI="${DRIVE}1"
-PART_ROOT="${DRIVE}2"
+if [[ "$DRIVE" =~ ^/dev/nvme ]]; then
+    PART_EFI="${DRIVE}p1"
+    PART_ROOT="${DRIVE}p2"
+else
+    PART_EFI="${DRIVE}1"
+    PART_ROOT="${DRIVE}2"
+fi
 
 mkfs.fat -F32 "$PART_EFI"
 mkfs.ext4 -F "$PART_ROOT"
@@ -142,4 +147,6 @@ systemctl enable NetworkManager
 echo "Chroot setup complete."
 EOF
 
-echo "You may now reboot into your new system."
+echo "Rebooting in 5 seconds"
+sleep 5
+reboot
