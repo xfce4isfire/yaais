@@ -47,6 +47,8 @@ safe_read "Passowrd for $newuser:" userpass
 safe_read "Root password:" rootpass
 safe_read "Desktop Environment (gnome, plasma, xfce, none):" desktop_env
 safe_read "Extra packages to install (space-separated, or leave blank):" extra_pkgs
+read -rp "Type 'YES' to continue: " final_confirm
+[[ "$final_confirm" != "YES" ]] && echo "Aborting." && exit 1
 
 ## partitioning
 bold "Wiping $DRIVE in 5 seconds! You have been warned."
