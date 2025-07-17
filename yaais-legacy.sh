@@ -125,8 +125,8 @@ echo "Chroot setup complete."
 sleep 1
 echo "Installation complete."
 
-read -rp "Type 'YES' to begin artix migration: " confirm-migrate
-[[ "$confirm-migrate" != "YES" ]] && echo "Aborting." && exit 1
+read -rp "Type 'YES' to begin artix migration: " confirm0
+[[ "$confirm0" != "YES" ]] && echo "Aborting." && exit 1
 
 sleep 2
 
