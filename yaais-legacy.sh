@@ -111,41 +111,42 @@ pacman -Sy --noconfirm grub efibootmgr networkmanager
 # install chosen DE
 case "$desktop_env" in
     gnome)
-        bold "Installing $desktop_env"
+        echo "Installing $desktop_env"
         sleep 2
         pacman -Sy --noconfirm gnome gdm
         systemctl enable gdm
         ;;
     plasma)
-        bold "Installing $desktop_env"
+        echo "Installing $desktop_env"
         sleep 2
         pacman -Sy --noconfirm plasma sddm
         systemctl enable sddm
         ;;
     xfce)
-        bold "Installing $desktop_env"
+        echo "Installing $desktop_env"
         sleep 2
         pacman -Sy --noconfirm xfce4 xfce4-goodies lightdm lightdm-gtk-greeter
         systemctl enable lightdm
         ;;
     none|"")
-        bold "Skipping DE installation."
+        echo "Skipping DE installation."
         sleep 2
         ;;
     *)
-        bold "Invalid DE selection. Skipping..."
+        echo "Invalid DE selection. Skipping..."
         sleep 2
         ;;
 esac
 
 # optional packages
-bold "Installing optional packages"
+echo "Installing optional packages"
+sleep 1.5
 if [[ -n "$extra_pkgs" ]]; then
     pacman -Sy --noconfirm $extra_pkgs || echo "Some packages may have failed to install."
 fi
 
 # install grub
-bold "Installing bootloader"
+echo "Installing bootloader"
 sleep 0.5
 grub-install --target=i386-pc "$DRIVE"
 grub-mkconfig -o /boot/grub/grub.cfg
