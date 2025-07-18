@@ -55,7 +55,8 @@ cp -vf /etc/pacman.d/mirrorlist.artix /etc/pacman.d/mirrorlist
 sleep 2
 
 # Install Artix base
-pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system
+pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system dhcpcd networkmanager dhcpcd-openrc
+rc-service dhcpcd start
 sleep 2
 
 # Reinstall GRUB
@@ -74,7 +75,7 @@ sleep 2
 pacman -S --needed --noconfirm acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc
 
 # Enable services
-for svc in acpid alsasound cronie cupsd xdm fuse haveged hdparm smb sshd syslog-ng udev; do
+for svc in acpid alsasound cronie cupsd sddm fuse haveged hdparm smb sshd syslog-ng udev; do
   rc-update add "$svc" default
 done
 
