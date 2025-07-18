@@ -123,12 +123,10 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "Chroot setup complete."
 sleep 1
-echo "Installation complete."
-
-read -rp "Type 'YES' to begin artix migration: " confirm0
-[[ "$confirm0" != "YES" ]] && echo "Aborting." && exit 1
-
-sleep 2
+echo "[!] Installation complete."
+sleep 1
+echo "[!] Beginning artix migration in 5 seconds"
+sleep 5
 
 echo "=== Artix Migration Starting ==="
 
