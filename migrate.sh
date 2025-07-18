@@ -35,8 +35,18 @@ systemctl list-units --state=running \
 sleep 2
 
 # Pre-download essential packages
-pacman -Sw --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system
+pacman -Sw --noconfirm \
+  base base-devel grub linux linux-headers mkinitcpio \
+  rsync lsb-release esysusers etmpfiles artix-branding-base \
+  openrc elogind-openrc openrc-system \
+  netifrc udev-init-scripts eudev \
+  acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc \
+  haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
+  mate mate-extra gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
+  sddm sddm-openrc dhcpcd networkmanager-openrc dhcpcd-openrc \
 sleep 2
+echo "[!!!] Removing systemd in 10 seconds! You have been warned!"
+sleep 10
 
 # Remove systemd
 pacman -Rdd --noconfirm systemd systemd-libs systemd-sysvcompat pacman-mirrorlist dbus
@@ -61,7 +71,7 @@ pacman -Sl galaxy | grep installed | cut -d" " -f2 | pacman -S --noconfirm -
 sleep 2
 
 # Add init scripts
-pacman -S --needed --noconfirm acpid-init alsa-utils-init cronie-init cups-init fuse-init haveged-init hdparm-init openssh-init samba-init syslog-ng-openrc
+pacman -S --needed --noconfirm acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc
 
 # Enable services
 for svc in acpid alsasound cronie cupsd xdm fuse haveged hdparm smb sshd syslog-ng udev; do
