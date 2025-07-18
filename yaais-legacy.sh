@@ -155,11 +155,6 @@ pacman-key --lsign-key 95AEC5D0C1E294FC9F82B253573A673A53C01BC2
 sed -i 's/^SigLevel = Never/#SigLevel = Never/' /etc/pacman.conf
 echo "SigLevel = Required DatabaseOptional" >> /etc/pacman.conf
 
-# 7. Save current running daemons for later use
-systemctl list-units --state=running \
-  | grep -v systemd | awk '{print $1}' \
-  | grep service > /root/daemon.list
-
 # 8. Pre-cache essential Artix packages
 pacman -Sw --noconfirm \
   base base-devel grub linux linux-headers mkinitcpio \
