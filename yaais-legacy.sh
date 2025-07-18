@@ -189,6 +189,7 @@ pacman -S --needed --noconfirm \
   haveged-init hdparm-init openssh-init samba-init syslog-ng-init
 
 # 14. Enable OpenRC services
+svc=""
 for svc in acpid alsasound cronie cupsd xdm fuse haveged hdparm smb sshd syslog-ng udev; do
   rc-update add "$svc" default
 done
