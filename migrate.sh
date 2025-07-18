@@ -96,6 +96,7 @@ mkinitcpio -P
 
 # Install MATE + SDDM
 pacman -S --noconfirm mate mate-extra gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils sddm sddm-openrc
-rc-update add xdm default
+sleep 3
+rc-update add sddm default
 
 echo "[!] Migrataion done"
