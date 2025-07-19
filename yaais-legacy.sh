@@ -75,7 +75,7 @@ mount "$PART_ROOT" /mnt
 
 bold "Installing base system..."
 sleep 2
-pacstrap -K /mnt base linux linux-firmware sudo vim
+pacstrap -K /mnt base linux linux-firmware sudo base-devel git
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
