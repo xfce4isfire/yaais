@@ -15,6 +15,7 @@ sleep 1
 curl -L https://gitea.artixlinux.org/packages/pacman/raw/branch/master/pacman.conf -o /etc/pacman.conf
 curl -L https://gitea.artixlinux.org/packages/artix-mirrorlist/raw/branch/master/mirrorlist -o /etc/pacman.d/mirrorlist
 cp -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.artix
+sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
 sleep 2
 
 # Clean and refresh
@@ -22,18 +23,12 @@ pacman -Scc --noconfirm
 pacman -Syy
 sleep 2
 
-# Keyring
-pacman -Sy --noconfirm artix-keyring
-pacman-key --populate artix
-pacman-key --lsign-key 95AEC5D0C1E294FC9F82B253573A673A53C01BC2
-sleep 2
-
 # Pre-download essential packages
 pacman -Sw --noconfirm \
   base base-devel grub linux linux-headers mkinitcpio \
   rsync lsb-release esysusers etmpfiles artix-branding-base \
   openrc elogind-openrc openrc-system \
-  netifrc udev-init-scripts eudev \
+  netifrc \
   acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc \
   haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
   mate mate-extra gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
