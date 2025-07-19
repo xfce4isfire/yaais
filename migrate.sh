@@ -2,6 +2,8 @@
 set -euo pipefail
 
 echo "[!] Starting artix migration in 5 seconds"
+sleep 1
+echo "This script assumes you have set SigLevel = Never in /etc/pacman.conf"
 sleep 5
 
 # Backup configs
@@ -21,7 +23,6 @@ pacman -Syy
 sleep 2
 
 # Keyring
-sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
 pacman -Sy --noconfirm artix-keyring
 pacman-key --populate artix
 pacman-key --lsign-key 95AEC5D0C1E294FC9F82B253573A673A53C01BC2
@@ -36,7 +37,7 @@ pacman -Sw --noconfirm \
   acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc \
   haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
   mate mate-extra gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
-  sddm sddm-openrc dhcpcd networkmanager-openrc dhcpcd-openrc udev 
+  sddm sddm-openrc dhcpcd networkmanager-openrc dhcpcd-openrc udev dbus
 sleep 2
 echo "[!!!] Removing systemd in 10 seconds! You have been warned!"
 sleep 10
