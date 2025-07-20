@@ -96,3 +96,5 @@ sleep 3
 rc-update add sddm default
 
 echo "[!] Migrataion done"
+echo "If somethings broken, its not my fault..."
+sleep 2
