@@ -26,7 +26,7 @@ pacman -Sw --noconfirm \
   acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc \
   haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
   gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
-  sddm sddm-openrc dhcpcd networkmanager-openrc dhcpcd-openrc udev dbus
+ dhcpcd networkmanager-openrc dhcpcd-openrc udev dbus
 sleep 2
 echo "[!!!] Removing systemd in 10 seconds! You have been warned!"
 sleep 10
@@ -57,9 +57,9 @@ pacman -Sl world  | grep installed | cut -d" " -f2 | pacman -S --noconfirm -
 pacman -Sl galaxy | grep installed | cut -d" " -f2 | pacman -S --noconfirm -
 sleep 2
 
-pacman -S --needed --noconfirm acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc
+pacman -S --needed --noconfirm acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc networkmanager networkmanager-openrc fuse-openrc haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc
 
-for svc in acpid alsasound cronie cupsd sddm fuse haveged hdparm smb sshd syslog-ng udev; do
+for svc in acpid alsasound cronie cupsd sddm fuse haveged hdparm smb sshd syslog-ng udev NetworkManager; do
   rc-update add "$svc" default
 done
 
@@ -80,8 +80,6 @@ sed -i '/x-systemd/d' /etc/fstab
 
 mkinitcpio -P
 
-rc-service add sddm default
-
 echo "[!] Migrataion done"
-echo "If somethings broken, its not my fault..."
+echo "Also consider installing a desktop/DM"
 sleep 2
