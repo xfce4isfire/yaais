@@ -4,9 +4,15 @@ echo "[!] Starting artix migration"
 sleep 2
 if ! grep -q '/dev' /proc/mounts; then
   echo "[!] You are not running from chroot, this is not ideal and is prone to cause issues!"
-  sleep 2
+  sleep 1
+  
+read -p "Continue anyway? (y/n): " CONFIRM
+if [[ "$CONFIRM" != "y" && "$CONFIRM" != "Y" ]]; then
+  echo "Exitting"
+  exit 1
+ fi
 fi
-
+sleep 2
 mv -vf /etc/pacman.conf /etc/pacman.conf.arch
 mv -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 sleep 1
