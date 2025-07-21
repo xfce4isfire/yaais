@@ -19,7 +19,6 @@ sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
 sleep 2
 
 # Clean and refresh
-pacman -Scc --noconfirm
 pacman -Syy
 sleep 2
 
@@ -46,7 +45,7 @@ sleep 2
 # Install Artix base
 pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system dhcpcd networkmanager dhcpcd-openrc
 rc-service dhcpcd start
-rc-service NetworkManager start
+dhcpcd -i enp0s1
 sleep 2
 
 # Reinstall GRUB
@@ -90,10 +89,8 @@ sed -i '/x-systemd/d' /etc/fstab
 # Regenerate initramfs
 mkinitcpio -P
 
-# Install MATE + SDDM
-pacman -S --noconfirm mate mate-extra gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils sddm sddm-openrc
-sleep 3
-rc-update add sddm default
+pacman -S --noconfirm lightdm lightdm-gtk-greeter
+rc-service add lightdm default
 
 echo "[!] Migrataion done"
 echo "If somethings broken, its not my fault..."
