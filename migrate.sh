@@ -44,7 +44,6 @@ sleep 2
 
 # Install Artix base
 pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system dhcpcd networkmanager dhcpcd-openrc
-rc-service dhcpcd start
 dhcpcd -i enp0s1
 sleep 2
 
