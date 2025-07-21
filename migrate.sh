@@ -19,7 +19,7 @@ sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
 sleep 2
 
 # stupid idiot keyring
-pacman -S artix-keyring
+pacman -S artix-keyring --noconfirm
 pacman-key --populate artix
 pacman-key --lsign-key 95AEC5D0C1E294FC9F82B253573A673A53C01BC2
 
