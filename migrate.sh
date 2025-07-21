@@ -31,26 +31,26 @@ sleep 2
 echo "[!!!] Removing systemd in 10 seconds! You have been warned!"
 sleep 10
 
-# Remove systemd
+# scary....
 pacman -Rdd --noconfirm systemd systemd-libs systemd-sysvcompat pacman-mirrorlist dbus
 rm -f /etc/resolv.conf
 cp -vf /etc/pacman.d/mirrorlist.artix /etc/pacman.d/mirrorlist
 pacman -S --noconfirm dhcpcd dhcpcd-openrc
 sleep 2
 
-# Install Artix base
+# attempt to start network and install base pkgs
+echo 'nameserver 1.1.1.1' > /etc/resolv.conf
 echo "Attempting to start internet"
-dhcpcd -i enp0s1
+dhcpcd -i enp0s1 # hardcoded lol
 sleep 10
 pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system dhcpcd networkmanager dhcpcd-openrc
 sleep 2
 
-# Reinstall GRUB
 grub-install --target=i386-pc /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 sleep 2
 
-# Reinstall all packages
+# replace arch pkgs with artix ones
 export LC_ALL=C
 pacman -Sl system | grep installed | cut -d" " -f2 | pacman -S --noconfirm -
 pacman -Sl world  | grep installed | cut -d" " -f2 | pacman -S --noconfirm -
@@ -64,7 +64,6 @@ for svc in acpid alsasound cronie cupsd sddm fuse haveged hdparm smb sshd syslog
 done
 
 pacman -S --needed --noconfirm netifrc
-echo 'nameserver 1.1.1.1' > /etc/resolv.conf
 echo 'GRUB_CMDLINE_LINUX="net.ifnames=0"' >> /etc/default/grub
 ln -sf /etc/init.d/net.lo /etc/init.d/net.eth0
 rc-update add net.eth0 boot
