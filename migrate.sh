@@ -11,12 +11,9 @@ curl -L https://gitea.artixlinux.org/packages/pacman/raw/branch/master/pacman.co
 curl -L https://gitea.artixlinux.org/packages/artix-mirrorlist/raw/branch/master/mirrorlist -o /etc/pacman.d/mirrorlist
 cp -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.artix
 sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
-pacman -S dhcpcd dhcpcd-openrc
-sleep 2
 
 rm -rf /var/cache/pacman
 pacman -Syy
-sleep 2
 
 pacman -Sw --noconfirm \
   base base-devel grub linux linux-headers mkinitcpio \
@@ -27,9 +24,8 @@ pacman -Sw --noconfirm \
   haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
   gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
  dhcpcd networkmanager-openrc dhcpcd-openrc udev dbus
-sleep 2
-echo "[!!!] Removing systemd in 10 seconds! You have been warned!"
-sleep 10
+echo "[!!!] Removing systemd in 5 seconds! You have been warned!"
+sleep 5
 
 # scary....
 pacman -Rdd --noconfirm systemd systemd-libs systemd-sysvcompat pacman-mirrorlist dbus
