@@ -20,6 +20,7 @@ pacman -S artix-keyring --noconfirm
 pacman-key --populate artix
 pacman-key --lsign-key 95AEC5D0C1E294FC9F82B253573A673A53C01BC2
 
+pacman -Scc --noconfirm
 pacman -Syy
 sleep 2
 
@@ -30,7 +31,7 @@ pacman -Sw --noconfirm \
   netifrc \
   acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc fuse-openrc \
   haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
-  mate mate-extra gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
+  gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
   sddm sddm-openrc dhcpcd networkmanager-openrc dhcpcd-openrc udev dbus
 sleep 2
 echo "[!!!] Removing systemd in 10 seconds! You have been warned!"
@@ -82,8 +83,7 @@ sed -i '/x-systemd/d' /etc/fstab
 
 mkinitcpio -P
 
-pacman -S --noconfirm lightdm lightdm-gtk-greeter
-rc-service add lightdm default
+rc-service add sddm default
 
 echo "[!] Migrataion done"
 echo "If somethings broken, its not my fault..."
