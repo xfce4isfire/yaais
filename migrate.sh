@@ -55,7 +55,7 @@ sleep 2
 
 pacman -S --needed --noconfirm acpid-openrc alsa-utils-openrc cronie-openrc cups-openrc networkmanager networkmanager-openrc fuse-openrc haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc
 
-for svc in acpid alsasound cronie cupsd sddm fuse haveged hdparm smb sshd syslog-ng udev NetworkManager; do
+for svc in acpid alsasound cronie cupsd fuse haveged hdparm smb sshd syslog-ng udev NetworkManager; do
   rc-update add "$svc" default
 done
 
