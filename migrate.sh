@@ -11,8 +11,8 @@ mv -vf /etc/pacman.conf /etc/pacman.conf.arch
 mv -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
 sleep 1
 
-curl -L https://gitea.artixlinux.org/packages/pacman/raw/branch/master/pacman.conf -o /etc/pacman.conf
-curl -L https://gitea.artixlinux.org/packages/artix-mirrorlist/raw/branch/master/mirrorlist -o /etc/pacman.d/mirrorlist
+curl -k -L https://gitea.artixlinux.org/packages/pacman/raw/branch/master/pacman.conf -o /etc/pacman.conf
+curl -k -L https://gitea.artixlinux.org/packages/artix-mirrorlist/raw/branch/master/mirrorlist -o /etc/pacman.d/mirrorlist
 cp -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.artix
 sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
 
