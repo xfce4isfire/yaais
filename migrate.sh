@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "[!] Starting artix migration in 5 seconds"
-sleep 5
+echo "[!] Starting artix migration"
+sleep 2
+if ! grep -q '/dev' /proc/mounts; then
+  echo "[!] You are not running from chroot, this is not ideal and is prone to cause issues!"
+  sleep 2
+fi
 
 mv -vf /etc/pacman.conf /etc/pacman.conf.arch
 mv -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-arch
@@ -24,7 +28,7 @@ pacman -Sw --noconfirm \
   haveged-openrc hdparm-openrc openssh-openrc samba-openrc syslog-ng-openrc \
   gvfs gvfs-mtp gvfs-smb xdg-user-dirs xdg-utils \
  dhcpcd networkmanager-openrc dhcpcd-openrc udev dbus
-echo "[!!!] Removing systemd in 5 seconds! You have been warned!"
+echo "[!] Removing systemd in 5 seconds"
 sleep 5
 
 # scary....
