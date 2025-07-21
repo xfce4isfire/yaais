@@ -1,8 +1,6 @@
 #!/bin/bash
 
 echo "[!] Starting artix migration in 5 seconds"
-sleep 1
-echo "This script assumes you have set SigLevel = Never in /etc/pacman.conf"
 sleep 5
 
 mv -vf /etc/pacman.conf /etc/pacman.conf.arch
@@ -13,14 +11,10 @@ curl -L https://gitea.artixlinux.org/packages/pacman/raw/branch/master/pacman.co
 curl -L https://gitea.artixlinux.org/packages/artix-mirrorlist/raw/branch/master/mirrorlist -o /etc/pacman.d/mirrorlist
 cp -vf /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.artix
 sed -i 's/^SigLevel.*/SigLevel = Never/' /etc/pacman.conf
+pacman -S dhcpcd dhcpcd-openrc
 sleep 2
 
-# stupid idiot keyring
-pacman -S artix-keyring --noconfirm
-pacman-key --populate artix
-pacman-key --lsign-key 95AEC5D0C1E294FC9F82B253573A673A53C01BC2
-
-pacman -Scc --noconfirm
+rm -rf /var/cache/pacman
 pacman -Syy
 sleep 2
 
@@ -44,8 +38,10 @@ cp -vf /etc/pacman.d/mirrorlist.artix /etc/pacman.d/mirrorlist
 sleep 2
 
 # Install Artix base
-pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system dhcpcd networkmanager dhcpcd-openrc
+echo "Attempting to start internet"
 dhcpcd -i enp0s1
+sleep 10
+pacman -S --noconfirm base base-devel grub linux linux-headers mkinitcpio rsync lsb-release esysusers etmpfiles artix-branding-base openrc elogind-openrc openrc-system dhcpcd networkmanager dhcpcd-openrc
 sleep 2
 
 # Reinstall GRUB
