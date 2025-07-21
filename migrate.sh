@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 echo "[!] Starting artix migration in 5 seconds"
 sleep 1
