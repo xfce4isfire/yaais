@@ -35,6 +35,7 @@ sleep 10
 pacman -Rdd --noconfirm systemd systemd-libs systemd-sysvcompat pacman-mirrorlist dbus
 rm -f /etc/resolv.conf
 cp -vf /etc/pacman.d/mirrorlist.artix /etc/pacman.d/mirrorlist
+pacman -S --noconfirm dhcpcd dhcpcd-openrc
 sleep 2
 
 # Install Artix base
